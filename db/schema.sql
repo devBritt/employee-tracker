@@ -10,6 +10,7 @@ create table departments (
 create table roles (
     id int auto_increment primary key,
     role_title varchar(30) not null,
+    salary decimal(8, 2) not null,
     department_id int not null,
     constraint fk_department foreign key (department_id) references departments(id)
 );
