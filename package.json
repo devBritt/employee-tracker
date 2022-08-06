@@ -1,0 +1,26 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devBritt/employee-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devBritt/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/devBritt/employee-tracker#readme",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "console.table": "^0.10.0",
+    "inquirer": "8.2",
+    "mysql2": "^2.3.3"
+  }
+}
