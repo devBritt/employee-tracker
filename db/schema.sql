@@ -20,7 +20,7 @@ create table employees (
     first_name varchar(30) not null,
     last_name varchar(30) not null,
     role_id int not null,
-    manager_id int not null,
+    manager_id int,
     constraint fk_role foreign key (role_id) references roles(id),
     constraint fk_manager foreign key (manager_id) references employees(id)
 );

@@ -1,4 +1,4 @@
-drop if exists company;
+drop database if exists company;
 create database company;
 use company;
 

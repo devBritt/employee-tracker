@@ -46,4 +46,4 @@ insert into employees (first_name, last_name, role_id, manager_id)
            ('Ruthann', 'Dougherty', 13, 5),
            ('Nicholas', 'Smith', 13, 5),
            ('Josephine', 'Griffin', 14, 5),
-            ('Winston', 'Landry', 14, 5);
+           ('Winston', 'Landry', 14, 5);
