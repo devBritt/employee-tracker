@@ -57,13 +57,18 @@ class SelectQuery {
 
 class AddQuery {
     constructor() {
-        // query for all employees
         this.addEmployee = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
         VALUES (?, ?, ?, ?)`;
+        this.addRole = `INSERT INTO roles (role_title, salary, department_id)
+        VALUES (?, ?, ?)`;
     };
 
     getAddEmployee() {
         return this.addEmployee;
+    };
+
+    getAddRole() {
+        return this.addRole;
     };
 }
 

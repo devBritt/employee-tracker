@@ -32,7 +32,7 @@ async function runApp() {
     console.log(answers);
     const select = new SelectQuery();
     const add = new AddQuery();
-    const [rows] = await db.execute(select.getAllEmployees());
+    const [rows] = await db.execute(select.getAllRoles());
     console.log(rows);
 }
 
