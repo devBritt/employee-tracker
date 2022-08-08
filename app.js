@@ -132,7 +132,7 @@ async function runApp() {
                     }
                     break;
                 case 'Remove an Employee':
-                    // logic here
+                    db.execute(queriesObj.getQueryString(answers.actions), employeeId);
                     break;
                 case 'View Roles':
                     // logic here
