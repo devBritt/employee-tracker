@@ -4,6 +4,7 @@ const { prompt } = require('inquirer');
 const createQuestions = require('./utils/createQuestions');
 const format = require('./utils/formatOutput');
 const Queries = require('./utils/queries');
+const { get } = require('http');
 
 // instance of Queries object for retrieving query strings
 const queriesObj = new Queries();
@@ -46,64 +47,106 @@ async function runApp() {
 
     async function queryDb() {
         const answers = await propmtUser();
-        
-        // check the values of prompt answers
-        switch (answers.actions) {
-            // check the value of actions from initial question
-            case 'View Employees':
-                switch (answers.employeeViews) {
-                    case 'All Employees':
-                        const [ allEmployees ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
-                        console.log(allEmployees);
-                        break;
-                    case 'By Role':
-                        const roleId = [];
-                        roleId.push(getID(answers.byRolesSelect));
-                        const [ employeesByRoles ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), roleId);
-                        console.log(employeesByRoles);
-                        break;
-                    case 'By Manager':
-                        const managerId = [];
-                        managerId.push(getID(answers.byManagersSelect));
-                        const [ employeesByManager ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), managerId);
-                        console.log(employeesByManager);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'Add an Employee':
-                // logic here
-                break;
-            case 'Update an Employee':
-                // logic here
-                break;
-            case 'Remove an Employee':
-                // logic here
-                break;
-            case 'View Roles':
-                // logic here
-                break;
-            case 'Add a Role':
-                // logic here
-                break;
-            case 'Remove a Role':
-                // logic here
-                break;
-            case 'View Departments':
-                // logic here
-                break;
-            case 'Add a Department':
-                // logic here
-                break;
-            case 'Remove a Department':
-                // logic here
-                break;
-            case 'View Payroll Budgets':
-                // logic here
-                break;
-            default:
-                break;
+
+        if (answers.actions !== 'Quit') {
+            const employeeId = [];
+            const roleId = [];
+            const managerId = [];
+            const departmentId = [];
+
+            // extract employee id if it exists
+            if (answers.employeeChoice) {
+                employeeId.push(getID(answers.employeeChoice));
+            } else if (answers.removeEmployee) {
+                employeeId.push(getID(answers.removeEmployee));
+            }
+            
+            // extract role id if it exists
+            if (answers.byRolesSelect) {
+                roleId.push(getID(answers.byRolesSelect));
+            } else if (answers.assignRole) {
+                roleId.push(getID(answers.assignRole));
+            } else if (answers.changeRole) {
+                roleId.push(getID(answers.changeRole));
+            } else if (answers.removeRole) {
+                roleId.push(getID(answers.removeRole));
+            }
+
+            // extract department id if it exists
+            if (answers.byDepartmentSelect) {
+                departmentId.push(getID(answers.byDepartmentSelect));
+            } else if (answers.assignDepartment) {
+                departmentId.push(getID(answers.assignDepartment));
+            } else if (answers.removeDepartment) {
+                departmentId.push(getID(answers.removeDepartment));
+            } else if (answers.departmentPayroll) {
+                departmentId.push(getID(answers.departmentPayroll));
+            }
+
+            // extract manager id if it exists
+            if (answers.byManagersSelect) {
+                managerId.push(getID(answers.byManagersSelect));
+            } else if (answers.assignManager) {
+                managerId.push(getID(answers.assignManager));
+            } else if (answers.changeManager) {
+                managerId.push(getID(answers.changeManager));
+            }
+
+            switch (answers.actions) {
+                case 'View Employees':
+                    switch (answers.employeeViews) {
+                        case 'All Employees':
+                            // query the db
+                            const [ allEmployees ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
+                            console.log(allEmployees);
+                            break;
+                        case 'By Role':
+                            const [ employeesByRoles ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), roleId);
+                            console.log(employeesByRoles);
+                            break;
+                        case 'By Manager':
+                            const [ employeesByManager ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), managerId);
+                            console.log(employeesByManager);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 'Add an Employee':
+                    const params = [];
+                    params.push(answers.firstName, answers.lastName, roleId[0], managerId[0]);
+                    db.execute(queriesObj.getQueryString(answers.actions), params);
+                    break;
+                case 'Update an Employee':
+                    // logic here
+                    break;
+                case 'Remove an Employee':
+                    // logic here
+                    break;
+                case 'View Roles':
+                    // logic here
+                    break;
+                case 'Add a Role':
+                    // logic here
+                    break;
+                case 'Remove a Role':
+                    // logic here
+                    break;
+                case 'View Departments':
+                    // logic here
+                    break;
+                case 'Add a Department':
+                    // logic here
+                    break;
+                case 'Remove a Department':
+                    // logic here
+                    break;
+                case 'View Payroll Budgets':
+                    // logic here
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
