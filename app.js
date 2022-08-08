@@ -31,8 +31,8 @@ async function runApp() {
     const answers = await propmtUser();
     console.log(answers);
     const select = new SelectQuery();
-    const update = new UpdateQuery();
-    const [rows] = await db.execute(select.getAllEmployees());
+    const remove = new DeleteQuery();
+    const [rows] = await db.execute(select.getAllDepartments());
     console.log(rows);
 }
 

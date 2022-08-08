@@ -101,12 +101,21 @@ class UpdateQuery {
 
 class DeleteQuery {
     constructor() {
-        // query for all employees
-        this.addEmployee = ``;
+        this.deleteEmployee = `DELETE FROM employees WHERE id=?`;
+        this.deleteRole = `DELETE FROM roles WHERE id=?`;
+        this.deleteDepartment = `DELETE FROM departments WHERE id=?`;
     };
 
-    getAddEmployee() {
-        return this.addEmployee;
+    getDelEmployee() {
+        return this.deleteEmployee;
+    };
+
+    getDelRole() {
+        return this.deleteRole;
+    };
+
+    getDelDepartment() {
+        return this.deleteDepartment;
     };
 }
 
