@@ -80,12 +80,22 @@ class AddQuery {
 
 class UpdateQuery {
     constructor() {
-        // query for all employees
-        this.addEmployee = ``;
+        // query to update an employee's role
+        this.updateRole = `UPDATE employees
+        SET role_id=?
+        WHERE id=?`;
+        // query to update an employee's manager
+        this.updateManager = `UPDATE employees
+        SET manager_id=?
+        WHERE id=?`;
     };
 
-    getAddEmployee() {
-        return this.addEmployee;
+    getUpdateRole() {
+        return this.updateRole;
+    };
+    
+    getUpdateManager() {
+        return this.updateManager;
     };
 }
 
