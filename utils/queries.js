@@ -31,7 +31,7 @@ class SelectQuery {
     };
 
     getAllEmployees() {
-        return this.viewAllEmployees;
+        return this.allEmployees;
     };
 
     getEmployeesByRole() {
@@ -55,5 +55,43 @@ class SelectQuery {
     };
 }
 
-module.exports = SelectQuery;
+class AddQuery {
+    constructor() {
+        // query for all employees
+        this.addEmployee = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+        VALUES (?, ?, ?, ?)`;
+    };
 
+    getAddEmployee() {
+        return this.addEmployee;
+    };
+}
+
+class UpdateQuery {
+    constructor() {
+        // query for all employees
+        this.addEmployee = ``;
+    };
+
+    getAddEmployee() {
+        return this.addEmployee;
+    };
+}
+
+class DeleteQuery {
+    constructor() {
+        // query for all employees
+        this.addEmployee = ``;
+    };
+
+    getAddEmployee() {
+        return this.addEmployee;
+    };
+}
+
+module.exports = {
+    SelectQuery,
+    AddQuery,
+    UpdateQuery,
+    DeleteQuery
+};

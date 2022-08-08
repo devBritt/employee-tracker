@@ -3,7 +3,12 @@ const user = require('./configs/configs');
 const { prompt } = require('inquirer');
 const createQuestions = require('./utils/createQuestions');
 const format = require('./utils/formatOutput');
-const SelectQuery = require('./utils/queries');
+const {
+    SelectQuery,
+    AddQuery,
+    UpdateQuery,
+    DeleteQuery
+} = require('./utils/queries');
 
 async function runApp() {
     // create connection to database
@@ -25,8 +30,9 @@ async function runApp() {
 
     const answers = await propmtUser();
     console.log(answers);
-    const queries = new SelectQuery();
-    const [rows] = await db.execute(queries.getAllDepartments());
+    const select = new SelectQuery();
+    const add = new AddQuery();
+    const [rows] = await db.execute(select.getAllEmployees());
     console.log(rows);
 }
 
