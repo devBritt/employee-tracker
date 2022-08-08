@@ -8,6 +8,13 @@ const Queries = require('./utils/queries');
 // instance of Queries object for retrieving query strings
 const queriesObj = new Queries();
 
+// function to extract id from string for queries
+function getID(string) {
+    const idString = string.split(' ')[0];
+
+    return idString.slice(2);
+}
+
 async function runApp() {
     // create connection to database
     const db = await mysql.createConnection({
@@ -44,8 +51,20 @@ async function runApp() {
             case 'View Employees':
                 switch (answers.employeeViews) {
                     case 'All Employees':
-                        const [ rows ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
-                        console.log(rows);
+                        const [ allEmployees ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
+                        console.log(allEmployees);
+                        break;
+                    case 'By Role':
+                        const roleId = [];
+                        roleId.push(getID(answers.byRolesSelect));
+                        const [ employeesByRoles ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), roleId);
+                        console.log(employeesByRoles);
+                        break;
+                    case 'By Manager':
+                        const managerId = [];
+                        managerId.push(getID(answers.byManagersSelect));
+                        const [ employeesByManager ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), managerId);
+                        console.log(employeesByManager);
                         break;
                     default:
                         break;
