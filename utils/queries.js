@@ -61,6 +61,8 @@ class AddQuery {
         VALUES (?, ?, ?, ?)`;
         this.addRole = `INSERT INTO roles (role_title, salary, department_id)
         VALUES (?, ?, ?)`;
+        this.addDepartment = `INSERT INTO departments (department_name)
+        VALUES (?)`;
     };
 
     getAddEmployee() {
@@ -69,6 +71,10 @@ class AddQuery {
 
     getAddRole() {
         return this.addRole;
+    };
+
+    getAddDepartment() {
+        return this.addDepartment;
     };
 }
 
