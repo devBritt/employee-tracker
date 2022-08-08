@@ -13,7 +13,7 @@ const queriesObj = new Queries();
 function getID(string) {
     const idString = string.split(' ')[0];
 
-    return idString.slice(2);
+    return parseInt(idString.slice(2).trim());
 }
 
 async function runApp() {
@@ -115,10 +115,21 @@ async function runApp() {
                 case 'Add an Employee':
                     const params = [];
                     params.push(answers.firstName, answers.lastName, roleId[0], managerId[0]);
-                    db.execute(queriesObj.getQueryString(answers.actions), params);
+                    await db.execute(queriesObj.getQueryString(answers.actions), params);
                     break;
                 case 'Update an Employee':
-                    // logic here
+                    switch (answers.updateChoice) {
+                        case "Change Employee's Role":
+                            const updateRole = [];
+                            params.push(roleId[0], employeeId[0]);
+                            await db.execute(queriesObj.getQueryString(answers.updateChoice), updateRole);
+                            break;
+                        case "Change Employee's Manager":
+                            const updateManager = [];
+                            updateManager.push(managerId[0], employeeId[0]);
+                            await db.execute(queriesObj.getQueryString(answers.updateChoice), updateManager);
+                            break;
+                    }
                     break;
                 case 'Remove an Employee':
                     // logic here
