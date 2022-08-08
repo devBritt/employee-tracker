@@ -302,26 +302,11 @@ async function createQuestions() {
         },
         {
             type: 'list',
-            name: 'payrollViews',
-            message: 'Which payroll view would you like to see?',
-            choices: [
-                'Company Payroll Budget',
-                'Payroll Budgets by Department'
-            ],
-            when: ({ actions }) => {
-                if (actions === 'View Payroll Budgets') {
-                    return true;
-                }
-                return false;
-            }
-        },
-        {
-            type: 'list',
             name: 'departmentPayroll',
             message: "Choose a department to see its roles:",
             choices: ['A list of all roles will go here'],
             when: ({ payrollViews }) => {
-                if (payrollViews === 'Payroll Budgets by Department') {
+                if (payrollViews === 'View Payroll Budgets') {
                     return true;
                 }
                 return false;

@@ -1,30 +1,33 @@
-const db = require('./db/connection');
+const mysql = require('mysql2/promise');
+const user = require('./configs/configs');
 const { prompt } = require('inquirer');
 const createQuestions = require('./utils/createQuestions');
 const format = require('./utils/formatOutput');
+const SelectQuery = require('./utils/queries');
 
-// connect to database
-db.connect(err => {
-    if(err) throw err;
-});
-
-// function to prompt users for input
-async function propmtUser() {
-    return await
-        prompt(await createQuestions())
-        .then(response => {
-            return response;
-        });
-};
-
-// run app after database connects
 async function runApp() {
+    // create connection to database
+    const db = await mysql.createConnection({
+        host: 'localhost',
+        user: user.username,
+        password: user.password,
+        database: 'company'
+    });
+    
+    // function to prompt users for input
+    async function propmtUser() {
+        return await
+            prompt(await createQuestions())
+            .then(response => {
+                return response;
+            });
+    };
+
     const answers = await propmtUser();
     console.log(answers);
+    const queries = new SelectQuery();
+    const [rows] = await db.execute(queries.getEmployeesByRole(), [11]);
+    console.log(rows);
 }
 
 runApp();
-
-db.end(err => {
-    console.log(err);
-})
