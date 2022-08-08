@@ -1,10 +1,20 @@
 const inquirer = require('inquirer');
 
-async function createQuestions() {
-    // call query to get employee first/last names
-    // call query to get role titles
-    // call query to get department titles
-    // call query to get manager first/last names
+// TODO: create function to get list of employees
+
+// TODO: create function to get list of role titles
+// TODO: create function to get list of departments
+// TODO: create function to get list of managers
+
+async function createQuestions(employees, roles, departments, managers) {
+    // format employees list
+    console.log(employees);
+    // format roles list
+    console.log(roles);
+    // format departments list
+    console.log(departments);
+    // format managers list
+    console.log(managers);
 
     return await [
         {

@@ -28,7 +28,6 @@ insert into employees (first_name, last_name, role_id, manager_id)
            ('James', 'Olson', 10, null),
            ('Joe', 'McCloud', 12, null),
            ('Laura', 'Dehaven', 15, null),
-           ('Thomas', 'Hart', 4, null),
            ('Jacqueline', 'Holifield', 1, 1),
            ('Randolph', 'Boyd', 1, 1),
            ('Justin', 'Tharp', 2, 1),

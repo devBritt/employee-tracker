@@ -51,6 +51,12 @@ class Queries {
         this.deleteRole = `DELETE FROM roles WHERE id=?`;
         // query string to delete a department
         this.deleteDepartment = `DELETE FROM departments WHERE id=?`;
+        // query string to view the payroll budget for a department
+        this.payrollBudget = `SELECT department_name, SUM(salary) AS payroll_budget
+        FROM employees
+        LEFT JOIN roles ON role_id=roles.id
+        LEFT JOIN departments ON department_id=departments.id
+        WHERE departments.id=?`;
     };
 
     getQueryString(action) {
@@ -83,6 +89,8 @@ class Queries {
                 return this.addDepartment;
             case 'Remove a Department': 
                 return this.deleteDepartment;
+            case 'View Payroll Budgets': 
+                return this.payrollBudget;
             default: 
                 break;
         }
