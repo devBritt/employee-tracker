@@ -22,7 +22,7 @@ async function createQuestions() {
                 'Remove a Role',
                 new inquirer.Separator(),
                 'View Departments',
-                'Add A Department',
+                'Add a Department',
                 'Remove a Department',
                 'View Payroll Budgets',
                 new inquirer.Separator(),
