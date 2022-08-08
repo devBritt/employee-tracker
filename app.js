@@ -28,7 +28,7 @@ async function runApp() {
         // get managers list for prompt questions
         const managers = await db.query(`SELECT * FROM employees WHERE manager_id IS NULL`);
 
-        const questions = await createQuestions(employees[0], roles[0], departments[0], managers[0]);
+        const questions = createQuestions(employees[0], roles[0], departments[0], managers[0]);
 
         return await
             prompt(questions)
@@ -39,7 +39,21 @@ async function runApp() {
 
     async function queryDb() {
         const answers = await propmtUser();
-        console.log(answers);
+        
+        switch (answers.actions) {
+            case 'View Employees':
+                switch (answers.employeeViews) {
+                    case 'All Employees':
+                        const [ rows ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
+                        console.log(rows);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     queryDb();
