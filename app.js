@@ -135,7 +135,16 @@ async function runApp() {
                     db.execute(queriesObj.getQueryString(answers.actions), employeeId);
                     break;
                 case 'View Roles':
-                    // logic here
+                    switch (answers.roleViews) {
+                        case 'All Roles':
+                            const [ allRoles ] = await db.query(queriesObj.getQueryString(answers.roleViews));
+                            console.log(allRoles);
+                            break;
+                        case 'By Department':
+                            const [ rolesbyDepartment ] = await db.query(queriesObj.getQueryString(answers.roleViews), departmentId);
+                            console.log(rolesbyDepartment);
+                            break;
+                    }
                     break;
                 case 'Add a Role':
                     // logic here
