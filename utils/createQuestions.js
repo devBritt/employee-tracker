@@ -1,22 +1,33 @@
 const inquirer = require('inquirer');
 
-// TODO: create function to get list of employees
+// function to format list of employees for prompts
+function formatEmployees(employees) {
+    const list = [];
 
+    // create employee id and full name string for prompts
+    employees.forEach(person => {
+        const string = 'ID' + person.id + ' ' + person.first_name + ' ' + person.last_name;
+        list.push(string);
+    });
+
+    return list;
+}
 // TODO: create function to get list of role titles
 // TODO: create function to get list of departments
-// TODO: create function to get list of managers
 
-async function createQuestions(employees, roles, departments, managers) {
+function createQuestions(employees, roles, departments, managers) {
     // format employees list
-    console.log(employees);
+    const employeesList = formatEmployees(employees);
+    console.log(employeesList);
     // format roles list
-    console.log(roles);
+    // console.log(roles);
     // format departments list
-    console.log(departments);
+    // console.log(departments);
     // format managers list
-    console.log(managers);
+    const managersList = formatEmployees(managers);
+    console.log(managersList);
 
-    return await [
+    return [
         {
             type: 'list',
             name: 'actions',
