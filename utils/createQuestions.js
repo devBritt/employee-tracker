@@ -12,20 +12,42 @@ function formatEmployees(employees) {
 
     return list;
 }
-// TODO: create function to get list of role titles
-// TODO: create function to get list of departments
+
+// function to format list of roles
+function formatRoles(roles) {
+    const list = [];
+
+    // create role id and title string for prompts
+    roles.forEach(role => {
+        const string = 'ID' + role.id + ' ' + role.role_title;
+        list.push(string);
+    });
+
+    return list;
+}
+
+// function to format list of departments
+function formatDepartments(departments) {
+    const list = [];
+
+    // create department id and title string for prompts
+    departments.forEach(department => {
+        const string = 'ID' + department.id + ' ' + department.department_name;
+        list.push(string);
+    });
+
+    return list;
+}
 
 function createQuestions(employees, roles, departments, managers) {
     // format employees list
     const employeesList = formatEmployees(employees);
-    console.log(employeesList);
     // format roles list
-    // console.log(roles);
+    const rolesList = formatRoles(roles);
     // format departments list
-    // console.log(departments);
+    const departmentsList = formatDepartments(departments);
     // format managers list
     const managersList = formatEmployees(managers);
-    console.log(managersList);
 
     return [
         {
@@ -71,9 +93,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'byRolesSelect',
             message: 'Select a role to view a list of employees:',
-            choices: [
-                'A list of all available roles will be displayed here.'
-            ],
+            choices: rolesList,
             when: ({ employeeViews }) => {
                 if (employeeViews === 'By Role') {
                     return true;
@@ -85,9 +105,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'byManagersSelect',
             message: 'Select a manager to view employees under them:',
-            choices: [
-                'A list of all available managers will be displayed here.'
-            ],
+            choices: managersList,
             when: ({ employeeViews }) => {
                 if (employeeViews === 'By Manager') {
                     return true;
@@ -137,7 +155,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'assignRole',
             message: "What is the employee's role?",
-            choices: ['A list of all available roles will be here'],
+            choices: rolesList,
             when: ({ actions }) => {
                 if (actions === 'Add an Employee') {
                     return true;
@@ -149,7 +167,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'assignManager',
             message: "Which manager will this employee report to?",
-            choices: ['A list of all available managers will be here'],
+            choices: managersList,
             when: ({ actions }) => {
                 if (actions === 'Add an Employee') {
                     return true;
@@ -161,7 +179,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'employeeChoice',
             message: 'Which employee would you like to update?',
-            choices: ['A list of employees will go here.'],
+            choices: employeesList,
             when: ({ actions }) => {
                 if (actions === 'Update an Employee') {
                     return true;
@@ -188,7 +206,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'changeRole',
             message: "What is the employee's new role?",
-            choices: ['A list of all available roles will be here'],
+            choices: rolesList,
             when: ({ updateChoice }) => {
                 if (updateChoice === "Change Employee's Role") {
                     return true;
@@ -200,7 +218,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'changeManager',
             message: "Which manager will this employee report to?",
-            choices: ['A list of all available managers will be here'],
+            choices: managersList,
             when: ({ updateChoice }) => {
                 if (updateChoice === "Change Employee's Manager") {
                     return true;
@@ -212,7 +230,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'removeEmployee',
             message: 'Which employee would you like to remove?',
-            choices: ['A list of employees will go here'],
+            choices: employeesList,
             when: ({ actions }) => {
                 if (actions === 'Remove an Employee') {
                     return true;
@@ -237,11 +255,11 @@ function createQuestions(employees, roles, departments, managers) {
         },
         {
             type: 'list',
-            name: 'rolesByDepartment',
+            name: 'byDepartmentSelect',
             message: "Choose a department to see its roles:",
-            choices: ['A list of all roles will go here'],
-            when: ({ viewRoles }) => {
-                if (viewRoles === 'By Department') {
+            choices: departmentsList,
+            when: ({ roleViews }) => {
+                if (roleViews === 'By Department') {
                     return true;
                 }
                 return false;
@@ -268,9 +286,9 @@ function createQuestions(employees, roles, departments, managers) {
         },
         {
             type: 'list',
-            name: 'roleDepartment',
+            name: 'assignDepartment',
             message: "Which department does this role belong to?",
-            choices: ['A list of all available departments will go here'],
+            choices: departmentsList,
             when: ({ actions }) => {
                 if (actions === 'Add a Role') {
                     return true;
@@ -282,7 +300,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'removeRole',
             message: 'Which role would you like to remove?',
-            choices: ['A list of roles will go here'],
+            choices: rolesList,
             when: ({ actions }) => {
                 if (actions === 'Remove a Role') {
                     return true;
@@ -303,7 +321,7 @@ function createQuestions(employees, roles, departments, managers) {
                 }
             },
             when: ({ actions }) => {
-                if (actions === 'Add A Department') {
+                if (actions === 'Add a Department') {
                     return true;
                 }
                 return false;
@@ -313,7 +331,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'removeDepartment',
             message: 'Which department would you like to remove?',
-            choices: ['A list of all departments will go here'],
+            choices: departmentsList,
             when: ({ actions }) => {
                 if (actions === 'Remove a Department') {
                     return true;
@@ -325,7 +343,7 @@ function createQuestions(employees, roles, departments, managers) {
             type: 'list',
             name: 'departmentPayroll',
             message: "Choose a department to see its roles:",
-            choices: ['A list of all roles will go here'],
+            choices: departmentsList,
             when: ({ payrollViews }) => {
                 if (payrollViews === 'View Payroll Budgets') {
                     return true;
