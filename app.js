@@ -47,7 +47,9 @@ async function runApp() {
     async function queryDb() {
         const answers = await propmtUser();
         
+        // check the values of prompt answers
         switch (answers.actions) {
+            // check the value of actions from initial question
             case 'View Employees':
                 switch (answers.employeeViews) {
                     case 'All Employees':
@@ -69,6 +71,36 @@ async function runApp() {
                     default:
                         break;
                 }
+                break;
+            case 'Add an Employee':
+                // logic here
+                break;
+            case 'Update an Employee':
+                // logic here
+                break;
+            case 'Remove an Employee':
+                // logic here
+                break;
+            case 'View Roles':
+                // logic here
+                break;
+            case 'Add a Role':
+                // logic here
+                break;
+            case 'Remove a Role':
+                // logic here
+                break;
+            case 'View Departments':
+                // logic here
+                break;
+            case 'Add a Department':
+                // logic here
+                break;
+            case 'Remove a Department':
+                // logic here
+                break;
+            case 'View Payroll Budgets':
+                // logic here
                 break;
             default:
                 break;
