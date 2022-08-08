@@ -26,7 +26,7 @@ async function runApp() {
     const answers = await propmtUser();
     console.log(answers);
     const queries = new SelectQuery();
-    const [rows] = await db.execute(queries.getEmployeesByRole(), [11]);
+    const [rows] = await db.execute(queries.getAllDepartments());
     console.log(rows);
 }
 
