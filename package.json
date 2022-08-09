@@ -1,3 +1,4 @@
+
 {
   "name": "employee-tracker",
   "version": "1.0.0",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/devBritt/employee-tracker#readme",
   "dependencies": {
+    "chalk": "^4.1.2",
     "console.table": "^0.10.0",
     "inquirer": "8.2",
     "mysql2": "^2.3.3"
