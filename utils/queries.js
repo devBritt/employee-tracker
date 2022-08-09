@@ -8,21 +8,25 @@ class Queries {
         LEFT JOIN roles ON a.role_id=roles.id
         LEFT JOIN departments ON department_id=departments.id`;
         // query string for employees by role
-        this.employeesByRole = `SELECT employees.id, first_name, last_name
-        FROM employees
-        LEFT JOIN roles ON role_id=roles.id
-        WHERE role_id=?`;
-        // query string for employees by manager
-        this.employeesByManager = `SELECT a.id, a.first_name, a.last_name
+        this.employeesByRole = `SELECT a.id, a.first_name, a.last_name, department_name AS department, salary, CONCAT_WS('', b.first_name, ' ', b.last_name) AS manager
         FROM employees a
         LEFT JOIN employees b ON a.manager_id=b.id
+        LEFT JOIN roles ON a.role_id=roles.id
+        LEFT JOIN departments ON department_id=departments.id
+        WHERE a.role_id=?`;
+        // query string for employees by manager
+        this.employeesByManager = `SELECT a.id, a.first_name, a.last_name, department_name AS department, role_title AS title, salary
+        FROM employees a
+        LEFT JOIN roles ON a.role_id=roles.id
+        LEFT JOIN employees b ON a.manager_id=b.id
+        LEFT JOIN departments ON department_id=departments.id
         WHERE a.manager_id=?`;
         // query string for all roles
-        this.allRoles = `SELECT roles.id, role_title, department_name
+        this.allRoles = `SELECT roles.id, role_title, salary, department_name
         FROM roles
         LEFT JOIN departments ON department_id=departments.id`;
         // query string for roles by department
-        this.rolesByDepartment = `SELECT roles.id, role_title
+        this.rolesByDepartment = `SELECT roles.id, role_title, salary
         FROM roles
         LEFT JOIN departments ON department_id=departments.id
         WHERE department_id=?`;

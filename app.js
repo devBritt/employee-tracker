@@ -156,7 +156,7 @@ async function runApp() {
                     switch (answers.updateChoice) {
                         case "Change Employee's Role":
                             const updateRole = [];
-                            params.push(roleId[0], employeeId[0]);
+                            updateRole.push(roleId[0], employeeId[0]);
                             await db.execute(queriesObj.getQueryString(answers.updateChoice), updateRole);
                             break;
                         case "Change Employee's Manager":
