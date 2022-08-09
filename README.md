@@ -66,7 +66,6 @@ Congrats! You are now running the Employee Tracker app!
 
 ### Demo
 ---
-Images and links to deployments/videos go here.
 [Employee Tracker](https://youtu.be/VSQql7FRQ8Y)
 [![Employee Tracker](./assets/et-screenshot.png)](https://youtu.be/VSQql7FRQ8Y)
 
