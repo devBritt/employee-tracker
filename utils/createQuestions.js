@@ -297,6 +297,25 @@ function createQuestions(employees, roles, departments, managers) {
             }
         },
         {
+            input: 'input',
+            name: 'assignSalary',
+            message: "What is this role's associated salary? (000000 or 000000.00) ",
+            validate: assignSalaryInput => {
+                if (assignSalaryInput && assignSalaryInput.length < 9 && assignSalaryInput.search(/[^0-9\.]/g) === -1) {
+                    return true;
+                } else {
+                    console.log("Please enter a valid salary that is no more than 8 digits, including 2 decimal spaces (NOT including the decimal point)");
+                    return false;
+                }
+            },
+            when: ({ actions }) => {
+                if (actions === 'Add a Role') {
+                    return true;
+                }
+                return false;
+            }
+        },
+        {
             type: 'list',
             name: 'removeRole',
             message: 'Which role would you like to remove?',

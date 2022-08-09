@@ -132,7 +132,7 @@ async function runApp() {
                     }
                     break;
                 case 'Remove an Employee':
-                    db.execute(queriesObj.getQueryString(answers.actions), employeeId);
+                    await db.execute(queriesObj.getQueryString(answers.actions), employeeId);
                     break;
                 case 'View Roles':
                     switch (answers.roleViews) {
@@ -141,16 +141,18 @@ async function runApp() {
                             console.log(allRoles);
                             break;
                         case 'By Department':
-                            const [ rolesbyDepartment ] = await db.query(queriesObj.getQueryString(answers.roleViews), departmentId);
+                            const [ rolesbyDepartment ] = await db.execute(queriesObj.getQueryString(answers.roleViews), departmentId);
                             console.log(rolesbyDepartment);
                             break;
                     }
                     break;
                 case 'Add a Role':
-                    // logic here
+                    const roleParams = [];
+                    roleParams.push(answers.roleTitle, answers.assignSalary, departmentId[0]);
+                    await db.execute(queriesObj.getQueryString(answers.actions), roleParams);
                     break;
                 case 'Remove a Role':
-                    // logic here
+                    await db.execute(queriesObj.getQueryString(answers.actions), roleId);
                     break;
                 case 'View Departments':
                     // logic here
