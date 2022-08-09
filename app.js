@@ -155,10 +155,11 @@ async function runApp() {
                     await db.execute(queriesObj.getQueryString(answers.actions), roleId);
                     break;
                 case 'View Departments':
-                    // logic here
+                    const [ allDepartments ] = await db.query(queriesObj.getQueryString(answers.actions));
+                    console.log(allDepartments);
                     break;
                 case 'Add a Department':
-                    // logic here
+                    await db.query(queriesObj.getQueryString(answers.actions), answers.departmentName);
                     break;
                 case 'Remove a Department':
                     // logic here
