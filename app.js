@@ -4,7 +4,11 @@ const { prompt } = require('inquirer');
 const createQuestions = require('./utils/createQuestions');
 const format = require('./utils/formatOutput');
 const Queries = require('./utils/queries');
-const { get } = require('http');
+const chalk = require ('chalk');
+
+// chalk themes
+const empTextTheme = chalk.bold.hex('#00a0e7');
+const trackTextTheme = chalk.bold.hex('#00e2e0');
 
 // instance of Queries object for retrieving query strings
 const queriesObj = new Queries();
@@ -14,6 +18,31 @@ function getID(string) {
     const idString = string.split(' ')[0];
 
     return parseInt(idString.slice(2).trim());
+}
+
+// function to display "splash screen"
+function displaySplash() {
+    const employeeText = `
+    _______             _                         
+   (_______)           | |                        
+    _____   ____  ____ | | ___  _   _ _____ _____ 
+   |  ___) |    \\|  _ \\| |/ _ \\| | | | ___ | ___ |
+   | |_____| | | | |_| | | |_| | |_| | ____| ____|
+   |_______)_|_|_|  __/ \\_)___/ \\__  |_____)_____)
+                 |_|           (____/          `;
+   const trackerText = `
+      _______                _                    
+     (_______)              | |                   
+         _  ____ _____  ____| |  _ _____  ____    
+        | |/ ___|____ |/ ___) |_/ ) ___ |/ ___)   
+        | | |   / ___ ( (___|  _ (| ____| |       
+        |_|_|   \\_____|\\____)_| \\_)_____)_|       
+    `;
+
+    // add color
+    const splashText = empTextTheme(employeeText) + trackTextTheme(trackerText);
+
+    return splashText;
 }
 
 async function runApp() {
@@ -98,15 +127,21 @@ async function runApp() {
                         case 'All Employees':
                             // query the db
                             const [ allEmployees ] = await db.query(queriesObj.getQueryString(answers.employeeViews));
-                            console.log(allEmployees);
+                            // format table
+                            const fEmployees = format(allEmployees);
+                            console.log(fEmployees);
                             break;
                         case 'By Role':
                             const [ employeesByRoles ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), roleId);
-                            console.log(employeesByRoles);
+                            // format table
+                            const fEmployeesByRole = format(employeesByRoles);
+                            console.log(fEmployeesByRole);
                             break;
                         case 'By Manager':
                             const [ employeesByManager ] = await db.execute(queriesObj.getQueryString(answers.employeeViews), managerId);
-                            console.log(employeesByManager);
+                            // format table
+                            const fEmployeesByManager = format(employeesByManager);
+                            console.log(fEmployeesByManager);
                             break;
                         default:
                             break;
@@ -138,11 +173,15 @@ async function runApp() {
                     switch (answers.roleViews) {
                         case 'All Roles':
                             const [ allRoles ] = await db.query(queriesObj.getQueryString(answers.roleViews));
-                            console.log(allRoles);
+                            // format table
+                            const fRoles = format(allRoles);
+                            console.log(fRoles);
                             break;
                         case 'By Department':
                             const [ rolesbyDepartment ] = await db.execute(queriesObj.getQueryString(answers.roleViews), departmentId);
-                            console.log(rolesbyDepartment);
+                            // format table
+                            const fRolesByDepartment = format(rolesbyDepartment);
+                            console.log(fRolesByDepartment);
                             break;
                     }
                     break;
@@ -156,7 +195,9 @@ async function runApp() {
                     break;
                 case 'View Departments':
                     const [ allDepartments ] = await db.query(queriesObj.getQueryString(answers.actions));
-                    console.log(allDepartments);
+                    // format table
+                    const fDepartments = format(allDepartments);
+                    console.log(fDepartments);
                     break;
                 case 'Add a Department':
                     await db.query(queriesObj.getQueryString(answers.actions), answers.departmentName);
@@ -166,14 +207,23 @@ async function runApp() {
                     break;
                 case 'View Payroll Budgets':
                     const [ payrollBudget ] = await db.query(queriesObj.getQueryString(answers.actions), departmentId);
-                    console.log(payrollBudget);
+                    // format table
+                    const fPayoll = format(payrollBudget);
+                    console.log(fPayoll);
                     break;
                 default:
                     break;
-            }
-        }
-    }
+                }
 
+            // will run so long as user doesn't select quit
+            queryDb();
+        } else {
+            console.log('Thank you for using the Employee Tracker! 👋')
+            db.end();
+        } 
+    };
+
+    console.log(displaySplash());
     queryDb();
 }
 
