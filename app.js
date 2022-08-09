@@ -162,10 +162,11 @@ async function runApp() {
                     await db.query(queriesObj.getQueryString(answers.actions), answers.departmentName);
                     break;
                 case 'Remove a Department':
-                    // logic here
+                    await db.query(queriesObj.getQueryString(answers.actions), departmentId);
                     break;
                 case 'View Payroll Budgets':
-                    // logic here
+                    const [ payrollBudget ] = await db.query(queriesObj.getQueryString(answers.actions), departmentId);
+                    console.log(payrollBudget);
                     break;
                 default:
                     break;

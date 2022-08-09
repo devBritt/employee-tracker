@@ -363,8 +363,8 @@ function createQuestions(employees, roles, departments, managers) {
             name: 'departmentPayroll',
             message: "Choose a department to see its roles:",
             choices: departmentsList,
-            when: ({ payrollViews }) => {
-                if (payrollViews === 'View Payroll Budgets') {
+            when: ({ actions }) => {
+                if (actions === 'View Payroll Budgets') {
                     return true;
                 }
                 return false;
